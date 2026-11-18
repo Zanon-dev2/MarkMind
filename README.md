@@ -1,14 +1,12 @@
-# MarkMind 🚀
+# MarkMind
 
-> An intelligent, automated documentation generator that scans your codebase, analyzes your files, and leverages the Google Gemini AI to craft professional `README.md` files instantly.
+> An automated, AI-powered documentation generator written in C++ that scans your project repository, bundles your source code, and queries the Google Gemini API to generate a professional `README.md` file.
 
 ---
 
-## 📖 Description
+## 📋 Description
 
-**MarkMind** is a lightweight C++ utility designed to streamline project documentation. By recursively walking through your project directory, it collects source code and configuration files, packages them securely into a structured API payload, and queries the **Google Gemini 3.5 Flash-Lite** model. 
-
-Within seconds, MarkMind writes a comprehensive, beautiful, and structured Markdown README directly into your project root—saving you hours of manual writing.
+**MarkMind** is a developer tool designed to eliminate the friction of writing project documentation. By recursively walking through your codebase, it intelligently collects relevant source files and configuration scripts (while ignoring build artifacts and version control directories) and sends them to the **Gemini API**. The AI analyzes your codebase architecture and outputs a clean, comprehensive, and professional `README.md` directly into your project root.
 
 ---
 
@@ -17,66 +15,64 @@ Within seconds, MarkMind writes a comprehensive, beautiful, and structured Markd
 ```text
 MarkMind/
 │
-├── markmind.cpp      # Core C++ application logic & cURL/Gemini API integration
-├── Makefile          # Build instructions for GNU Make / MinGW
-└── README.md         # Project documentation (Auto-generated or manual)
+├── markmind.cpp      # Main C++ source file containing file-walker, cURL logic, and CLI parser
+├── Makefile          # Build configuration for compilation via Make
+└── README.md         # Project documentation (auto-generated or manual)
 ```
 
 ---
 
-## 📦 Dependencies
+## ⚙️ Dependencies
 
-To compile and run MarkMind, ensure you have the following libraries and tools installed on your system:
+To successfully compile and run **MarkMind**, ensure you have the following installed on your system:
 
-1. **C++17 Compatible Compiler** (e.g., `g++` from GCC 14+ or Clang)
-2. **libcurl** (Client URL transfer library)
-3. **nlohmann/json** (JSON for Modern C++)
-4. **workez.hpp** (Custom/Helper utility header used in the codebase)
-5. **Windows Sockets (`-lws2_32`)** (Required if compiling on Windows)
+1. **C++17 Compiler** (e.g., `g++` via MinGW on Windows or GCC on Linux)
+2. **libcurl** (Client URL library for HTTP requests)
+3. **nlohmann/json** (Modern JSON parser for C++)
+4. **workez.hpp** (Custom/utility header referenced in the source)
+5. **Windows Sockets API (`-lws2_32`)** (Required if compiling on Windows for network operations)
 
 ---
 
 ## 🛠️ How to Compile
 
-MarkMind comes with a built-in `Makefile` configured for Windows environments using `g++` and linking against `libcurl` and `ws2_32`.
-
-To compile the project, open your terminal in the root directory and run:
+MarkMind comes with a `Makefile` configured for `g++`. Open your terminal in the project directory and run:
 
 ```bash
 make build
 ```
 
-This will output an executable named `Mark.exe`.
+This will compile `markmind.cpp` with C++17 standards, link `libcurl` and `ws2_32`, and output an executable named `Mark.exe`.
 
 ---
 
 ## 🚀 How to Use
 
-Before running MarkMind, you must set your Google Gemini API key as an environment variable.
+Before running the application, you must set your Gemini API key as an environment variable.
 
-### 1. Set your API Key
+### 1. Set the Environment Variable
 
 * **Windows (Command Prompt):**
   ```cmd
-  set GEMINI_API_KEY=your_api_key_here
+  set GEMINI_API_KEY=your_actual_api_key_here
   ```
 
 * **Windows (PowerShell):**
   ```powershell
-  $env:GEMINI_API_KEY="your_api_key_here"
+  $env:GEMINI_API_KEY="your_actual_api_key_here"
   ```
 
-* **Linux / macOS (Bash/Zsh):**
+* **Linux / macOS:**
   ```bash
-  export GEMINI_API_KEY="your_api_key_here"
+  export GEMINI_API_KEY="your_actual_api_key_here"
   ```
 
-### 2. Run the Generator
+### 2. Run the Executable
 
-Execute the binary using the `api local` command to scan the current directory and generate your README:
+Execute the program using the `api local` command to scan the current directory and generate the README:
 
 ```bash
-Mark.exe api local
+./Mark.exe api local
 ```
 
-Once executed successfully, a brand new `README.md` file will appear in your project folder!
+Once executed successfully, a newly generated `README.md` file will appear in your project root directory.
