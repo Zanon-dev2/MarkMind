@@ -48,20 +48,35 @@ std::string ccp(const fs::path& act){
     return ss.str();
 }
 
+std::string rdfl(const fs::path& act){
+    if (!fs::exists(act) || !fs::is_regular_file(act)) {
+        throw "INVALID FILE";
+        return "";
+    }
+    std::ifstream arq(act);
+    if (arq.is_open()) {
+        throw "Coudn't open the file";
+        return "";
+    }
+    std::stringstream ss;
+    ss << "---Archive: " << act.string() << "---\n";
+    ss << arq.rdbuf();
+    return ss.str();
+}
+
 U0 api(I32 mode, I8** arg){
-    if (mode == 3 && strncmp(arg[2], "local", 5) == 0) {
+    auto call = [&](std::string code){
         const I8* envk = std::getenv("GEMINI_API_KEY");
         if (!envk) {
             throw "Doesn't have the API key";
         }
         std::string apik = envk;
-        std::string code = ccp(".");
         if(code.empty()){
             throw "nothing found";
         }
         //if you want other idiom, switch it here
         std::string api_call = "Write an professional README and beatiful in english\n"
-                                "May have: Title, description, folder structure, how to compile, how to use and dependencies\n"
+                                "May have: Title, description, folder structure (But don't say about any README on folder structure), how to compile, how to use and dependencies\n"
                                 "code: " + code;
         json payload = {
             {"contents", {{
@@ -119,6 +134,17 @@ U0 api(I32 mode, I8** arg){
             }
             curl_slist_free_all(hrds);
             curl_easy_cleanup(cl);
+        }
+    };
+    if (mode == 3 && strncmp(arg[2], "local", 5) == 0) {
+        call(ccp("."));
+    }
+    else if (mode == 4 && strncmp(arg[2], "file", 4) == 0) {
+        try {
+            std::string fl = rdfl(arg[3]);
+            call(fl);
+        } catch (std::string msg) {
+            std::cerr<<msg;
         }
     }
 }

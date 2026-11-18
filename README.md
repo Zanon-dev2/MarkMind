@@ -1,66 +1,62 @@
 # MarkMind
 
-> An automated, AI-powered documentation generator written in C++ that scans your project repository, bundles your source code, and queries the Google Gemini API to generate a professional `README.md` file.
+> An intelligent, automated CLI tool that scans your source code and leverages the Gemini AI API to generate professional, comprehensive `README.md` documentation instantly.
 
 ---
 
-## 📋 Description
+## Description
 
-**MarkMind** is a developer tool designed to eliminate the friction of writing project documentation. By recursively walking through your codebase, it intelligently collects relevant source files and configuration scripts (while ignoring build artifacts and version control directories) and sends them to the **Gemini API**. The AI analyzes your codebase architecture and outputs a clean, comprehensive, and professional `README.md` directly into your project root.
+MarkMind is a C++ command-line utility designed to streamline the documentation process for developers. By analyzing either an entire directory tree (recursively filtering out build folders and noise) or a specific source file, MarkMind packages your code structure and contents into a payload, communicates securely with the Gemini API via `libcurl`, and automatically outputs a polished, ready-to-use `README.md`.
 
 ---
 
-## 🗂️ Folder Structure
+## Folder Structure
 
 ```text
-MarkMind/
-│
-├── markmind.cpp      # Main C++ source file containing file-walker, cURL logic, and CLI parser
-├── Makefile          # Build configuration for compilation via Make
+.
+├── Makefile
+└── markmind.cpp
 ```
 
 ---
 
-## ⚙️ Dependencies
+## Dependencies
 
-To successfully compile and run **MarkMind**, ensure you have the following installed on your system:
+To successfully compile and run MarkMind, ensure you have the following libraries and tools installed on your system:
 
-1. **C++17 Compiler** (e.g., `g++` via MinGW on Windows or GCC on Linux)
-2. **libcurl** (Client URL library for HTTP requests)
-3. **nlohmann/json** (Modern JSON parser for C++)
-4. **workez.hpp** (Custom/utility header referenced in the source)
-5. **Windows Sockets API (`-lws2_32`)** (Required if compiling on Windows for network operations)
+* **C++17 Compatible Compiler** (e.g., `g++` via MinGW or GCC)
+* **libcurl** (Client URL request library)
+* **nlohmann/json** (JSON for Modern C++ header-only library)
+* **workez.hpp** (Custom header utilized in source context)
+* **Windows Sockets (`-lws2_32`)** (Required for network operations on Windows platforms)
 
 ---
 
-## 🛠️ How to Compile
+## How to Compile
 
-MarkMind comes with a `Makefile` configured for `g++`. Open your terminal in the project directory and run:
+A `Makefile` is provided to simplify the build process using `g++`. Open your terminal in the project root and run the following command:
 
 ```bash
 make build
 ```
 
-This will compile `markmind.cpp` with C++17 standards, link `libcurl` and `ws2_32`, and output an executable named `Mark.exe`.
+This will compile `markmind.cpp` with C++17 standards, link the necessary cURL and Windows socket libraries, and output an executable named `Mark.exe`.
 
 ---
 
-## 🚀 How to Use
+## How to Use
 
-Before running the application, you must set your Gemini API key as an environment variable.
+MarkMind requires a valid Gemini API key set in your environment variables before execution.
 
-### 1. Set the Environment Variable
-
+### 1. Set your Environment Variable
 * **Windows (Command Prompt):**
   ```cmd
   set GEMINI_API_KEY=your_actual_api_key_here
   ```
-
 * **Windows (PowerShell):**
   ```powershell
   $env:GEMINI_API_KEY="your_actual_api_key_here"
   ```
-
 * **Linux / macOS:**
   ```bash
   export GEMINI_API_KEY="your_actual_api_key_here"
@@ -68,10 +64,14 @@ Before running the application, you must set your Gemini API key as an environme
 
 ### 2. Run the Executable
 
-Execute the program using the `api local` command to scan the current directory and generate the README:
+* **Generate a README for an entire local directory:**
+  Scans all relevant source files in the current directory (ignoring standard build directories, `.git`, `node_modules`, etc.) and generates a `README.md`.
+  ```bash
+  Mark.exe api local
+  ```
 
-```bash
-./Mark.exe api local
-```
-
-Once executed successfully, a newly generated `README.md` file will appear in your project root directory.
+* **Generate a README for a specific file:**
+  Target an individual file for analysis and documentation generation.
+  ```bash
+  Mark.exe api file path/to/your/file.cpp
+  ```
