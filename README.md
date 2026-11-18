@@ -28,7 +28,7 @@ MarkMind/
 
 To compile and run MarkMind, ensure you have the following libraries and tools installed on your system:
 
-1. **C++26 Compatible Compiler** (e.g., `g++` from GCC 14+ or Clang)
+1. **C++17 Compatible Compiler** (e.g., `g++` from GCC 14+ or Clang)
 2. **libcurl** (Client URL transfer library)
 3. **nlohmann/json** (JSON for Modern C++)
 4. **workez.hpp** (Custom/Helper utility header used in the codebase)
