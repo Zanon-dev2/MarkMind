@@ -1,2 +1,2 @@
 build:
-	g++ -std=c++26 markmind.cpp -o Mark.exe -lcurl -lws2_32
+	g++ -std=c++17 markmind.cpp -o Mark.exe -lcurl -lws2_32
