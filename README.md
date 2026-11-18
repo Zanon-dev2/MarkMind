@@ -17,7 +17,6 @@ MarkMind/
 │
 ├── markmind.cpp      # Main C++ source file containing file-walker, cURL logic, and CLI parser
 ├── Makefile          # Build configuration for compilation via Make
-└── README.md         # Project documentation (auto-generated or manual)
 ```
 
 ---
