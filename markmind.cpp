@@ -54,7 +54,7 @@ std::string rdfl(const fs::path& act){
         return "";
     }
     std::ifstream arq(act);
-    if (arq.is_open()) {
+    if (!arq.is_open()) {
         throw "Coudn't open the file";
         return "";
     }
